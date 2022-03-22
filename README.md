@@ -1,6 +1,10 @@
-## kui-next vue3组件库 基于element-ui二次开发，根据项目需求，方便项目开发使用 
 
-# 安装
+# kui-next 
+
+vue3组件库
+####  基于element-ui二次开发，根据项目需求，方便项目开发使用 
+
+#### 安装
 ```
 # Npm  
 npm install kui-next
@@ -8,7 +12,7 @@ npm install kui-next
 # Yarn  
 yarn add kui-next 
 ```
-## 使用 按需引入
+#### 使用 按需引入
 
 ```js
 import {
@@ -37,7 +41,7 @@ export default {
   },
 };
 ```
-## 全局components:
+#### 全局components:
 
 ```
 import { createApp } from 'vue';
