@@ -1,0 +1,55 @@
+{
+  "name": "kui-next",
+  "version": "0.1.5",
+  "workspaces": [
+    "packages/*"
+  ],
+  "files": [
+    "lib",
+    "src",
+    "packages"
+  ],
+  "main": "./lib/k.umd.js",
+  "module": "./lib/k.es.js",
+  "exports": {
+    ".": {
+      "import": "./lib/k.es.js",
+      "require": "./lib/k.umd.js"
+    },
+    "./lib/style.css": {
+      "import": "./lib/style.css",
+      "require": "./lib/style.css"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs",
+    "stylelint": "stylelint **/*.scss --fix",
+    "clean": "rm -rf node_modules **/*/node_modules",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "dependencies": {
+    "vue": "^3.2.31",
+    "vue-router": "^4.0.14"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.2.4",
+    "@vue/compiler-sfc": "^3.2.31",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4 ",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-vue": "^8.5.0",
+    "postcss-html": "^1.3.0",
+    "sass": "^1.49.9",
+    "stylelint": "^14.6.0",
+    "stylelint-config-sass-guidelines": "^8.0.0",
+    "stylelint-config-standard-scss": "^3.0.0",
+    "stylelint-scss": "^4.2.0",
+    "vite": "^2.8.6",
+    "vitepress": "^0.22.3"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@common/core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "wenxin",
+  "license": "ISC",
+  "dependencies": {
+    "@common/components": "workspace:^1.0.0",
+    "axios": "^0.21.1",
+    "element-plus": "^2.0.4",
+    "pinia": "^2.0.11",
+    "vue": "^3.2.23",
+    "vue-router": "^4.0.12"
+  }
+}

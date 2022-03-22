@@ -1,0 +1,22 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "element-plus": "^2.0.4",
+    "markdown-it": "^12.3.2",
+    "markdown-it-container": "^3.0.0",
+    "vite-plugin-inspect": "^0.4.3",
+    "vite-plugin-windicss": "^1.8.3",
+    "vitepress": "^0.22.3",
+    "windicss": "^3.5.1"
+  }
+}
