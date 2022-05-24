@@ -1,12 +1,13 @@
 <template>
   <el-table :data="tableDataList" style="width: 100%;" class="mt20" :header-cell-style="headerCellStyle" v-bind="$attrs" :empty-text="emptyText" @sort-change="sortChange">
-    <el-table-column v-for="item in tableColumn" :key="item.prop" :label="item.label" :name="item.name" :width="item.width" :min-width="item.minWidth" :fixed="item.fixed" :sortable="item.sortable" show-overflow-tooltip>
+    <el-table-column v-for="item in tableColumn" :key="item.prop" :label="item.label" :name="item.name" :width="item.width" :min-width="item.minWidth" :fixed="item.fixed" :sortable="item.sortable" :type="item.type" show-overflow-tooltip>
       <template #header v-if="item.header">
         <slot :name="item.header" />
       </template>
       <template #default="scope">
-        <slot v-if="item.custom && scope.$index >=0" :name="item.custom" :item="scope.row" :index="scope.$index" />
-        <span v-else>{{ scope.row[item.prop] }}</span>
+        <slot v-if="$slots.default" :item="scope.row" :row="scope.row" :index="scope.$index" />
+        <slot v-else-if="item.custom && scope.$index >=0" :name="item.custom" :item="scope.row" :row="scope.row" :index="scope.$index" />
+        <span v-else>{{ scope.row[item.prop] ?? '-' }}</span>
       </template>
     </el-table-column>
     <template #empty v-if="$slots.empty">
@@ -41,6 +42,7 @@ export default defineComponent({
     tableData: { type: Array, default: () => [] },
     modelValue: { type: Number, default: 1 },
     total: { type: Number, default: 9 },
+    size: { type: Number, default: 10 },
   },
   emits: ['update:modelValue', 'current-change', 'update:tableData', 'sort-change'],
   setup(props, { emit }) {
@@ -58,7 +60,12 @@ export default defineComponent({
     const sortChange = ({ column, prop, order }) => {
       const sortType = order === 'ascending' ? 1 : 0;
       emit('sort-change', {
-        prop, order, sortType, currentPage: currentPage.value, column, sortColumn: column.rawColumnKey,
+        prop,
+        order,
+        sortType,
+        currentPage: currentPage.value,
+        column,
+        sortColumn: column.rawColumnKey.replace(/[A-Z]/g, (res) => `_${res.toLowerCase()}`),
       });
     };
 

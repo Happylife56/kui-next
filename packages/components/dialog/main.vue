@@ -64,11 +64,11 @@ export default defineComponent({
 
 <style lang="scss">
 .custom-dialog {
-
   .el-dialog__body {
     padding: 6px 20px 20px;
   }
 }
+
 .no-footer {
   .el-dialog__footer {
     padding: 0;

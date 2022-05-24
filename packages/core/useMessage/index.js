@@ -1,15 +1,16 @@
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 export function useMessage() {
-  const setOption = (text, type) => {
+  const setOption = (text, type, arg) => {
     ElMessage.closeAll();
-    ElMessage({ message: text, type });
+    ElMessage({ message: text, type, ...arg });
   };
   const message = {
-    error: (text) => setOption(text, 'error'),
-    success: (text) => setOption(text, 'success'),
-    warning: (text) => setOption(text, 'warning'),
-    info: (text) => setOption(text, 'info'),
+    error: (text, arg) => setOption(text, 'error', arg),
+    success: (text, arg) => setOption(text, 'success', arg),
+    warning: (text, arg) => setOption(text, 'warning', arg),
+    info: (text, arg) => setOption(text, 'info', arg),
+    close: () => ElMessage.closeAll(),
   };
   const messageBox = {
     confirm: ({ msg, title = '提示', type = 'warning' }) => new Promise((resolve) => {
@@ -28,7 +29,16 @@ export function useMessage() {
           window.top.postMessage('closeMask()', '*');
         });
     }),
+    alert: ({ msg, title = '提示', type = 'warning' }, callback) => {
+      ElMessageBox.alert(msg, title, {
+        confirmButtonText: '确认',
+        type,
+        callback: (action) => callback(action),
+      });
+    },
   };
 
-  return { message, messageBox };
+  return {
+    message, messageBox,
+  };
 }

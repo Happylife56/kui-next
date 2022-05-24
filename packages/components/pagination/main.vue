@@ -1,15 +1,11 @@
 <template>
   <div class="page-right mt20" v-if="total > size">
-    <el-config-provider :locale="locale">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:currentPage="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="size" :layout="layoutList" :total="total" :small="small" />
-    </el-config-provider>
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:currentPage="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="size" :layout="layoutList" :total="total" :small="small" v-bind="$attrs" />
   </div>
 </template>
 
 <script>
 import { computed, defineComponent } from 'vue';
-import { ElConfigProvider } from 'element-plus';
-import zhCn from 'element-plus/lib/locale/lang/zh-cn';
 
 export default defineComponent({
   name: 'KPage',
@@ -20,10 +16,8 @@ export default defineComponent({
     showSize: { type: Boolean, default: false },
     small: { type: Boolean, default: false },
   },
-  components: { ElConfigProvider },
   emits: ['update:modelValue', 'update:size', 'current-change', 'size-change', 'change'],
   setup(props, { emit }) {
-    const locale = zhCn;
     const currentPage = computed({
       get() {
         return props.modelValue;
@@ -48,7 +42,7 @@ export default defineComponent({
       emit('change', { page: val, size: props.size });
     };
     return {
-      locale, currentPage, layoutList, handleSizeChange, handleCurrentChange,
+      currentPage, layoutList, handleSizeChange, handleCurrentChange,
     };
   },
 });

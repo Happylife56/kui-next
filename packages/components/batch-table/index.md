@@ -6,6 +6,7 @@
 | tableColumn | Array | [{ lable:'日期', prop: 'date'}] |
 | tableData | Array |  :tableData 或者 v-model:tableData="data" |
 | page | Number |  v-model:page="current" |
+| size | Number |  每页显示的条数 |
 | keyId | String |  设置选择的唯一值，默认id |
 | model-value / v-model | Array |  选择的数组 |
 | selectList | Array |  已选择的列表 |

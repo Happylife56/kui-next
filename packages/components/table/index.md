@@ -6,6 +6,8 @@
 | tableColumn | Array | [{ lable:'日期', prop: 'date'}] |
 | tableData | Array |  :tableData 或者 v-model:tableData="data" |
 | currentPage | Number |  v-model="current" |
+| total | Number |  数据的总条数 |
+| size | Number |  每页显示的条数 |
 
 其他参数看element官网
 

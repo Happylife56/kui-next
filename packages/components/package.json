@@ -1,7 +1,8 @@
 {
   "name": "@common/components",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "vue3常用组件",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
@@ -9,10 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "@element-plus/icons-vue": "^1.0.0",
-    "element-plus": "^2.0.4",
-    "vue": "^3.2.24"
+    "element-plus": "^2.2.0",
+    "vue": "^3.2.32"
   },
   "devDependencies": {
     "vue-router": "^4.0.12"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -8,7 +8,6 @@
 
 <script>
 import { ref, defineComponent } from 'vue';
-import { ElMessage } from 'element-plus';
 
 export default defineComponent({
   name: 'KButton',
@@ -25,17 +24,11 @@ export default defineComponent({
     const stopTime = ref(null);
 
     const onclick = () => {
-      // 如果没有权限，提示没有权限
-      if (props.iconLock) {
-        ElMessage.closeAll();
-        ElMessage.warning('抱歉，您无权访问，请联系管理员分配权限');
-      } else {
-        if (buttonStatus.value) {
-          buttonStatus.value = false;
-          emit('click');
-        }
-        setButton();
+      if (buttonStatus.value) {
+        buttonStatus.value = false;
+        emit('click');
       }
+      setButton();
     };
     const setButton = () => {
       // 添加一个定时器，点击之后延时1.5s，防二次点击后台报错

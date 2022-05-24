@@ -8,11 +8,11 @@ export const directives = {
         el.querySelector('input').focus();
       }, 100);
     },
-    updated: (el) => {
-      setTimeout(() => {
-        el.querySelector('input').focus();
-      }, 100);
-    },
+    // updated: (el) => {
+    //   setTimeout(() => {
+    //     el.querySelector('input').focus();
+    //   }, 100);
+    // },
   },
   /**
    * 返参金额的处理

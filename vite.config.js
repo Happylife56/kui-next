@@ -39,7 +39,7 @@ export default defineConfig({
     preprocessorOptions: {
       // 引入公用的样式
       scss: {
-        additionalData: '@import "@/styles/common.scss";',
+        additionalData: '@import "./styles/common.scss";',
       },
     },
   },

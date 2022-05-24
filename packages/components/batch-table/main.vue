@@ -6,15 +6,15 @@
         <slot :name="item.header" />
       </template>
       <template #default="scope">
-        <slot v-if="item.custom && scope.$index >=0" :name="item.custom" :item="scope.row" :index="scope.$index" />
-        <span v-else>{{ scope.row[item.prop] }}</span>
+        <slot v-if="item.custom && scope.$index >=0" :name="item.custom" :item="scope.row" :row="scope.row" :index="scope.$index" />
+        <span v-else>{{ scope.row[item.prop] ?? '-' }}</span>
       </template>
     </el-table-column>
     <template #empty v-if="$slots.empty">
       <slot name="empty" />
     </template>
   </el-table>
-  <div class="mt20 flex-between">
+  <div v-if="$slots.footer" class="mt20 flex-between">
     <div class="flex1">
       <slot name="footer" />
     </div>
@@ -27,34 +27,13 @@ import {
   ref, computed, watch, defineComponent, nextTick,
 } from 'vue';
 import pagination from '../pagination';
+import propsValue from './propsValue';
 
 export default defineComponent({
   name: 'KBatchTable',
   components: { pagination },
-  props: {
-    modelValue: { type: Array, default: () => [] },
-    total: { type: Number, default: 9 },
-    page: { type: Number, default: 1 },
-    keyId: { type: String, default: 'id' },
-    checkKey: { type: String, default: 'isSelect' },
-    tableData: { type: Array, default: () => [] },
-    selectList: { type: Array, default: () => [] },
-    tableColumn: {
-      type: Array,
-      default: () => [
-        { label: '商品名称', prop: 'name' },
-        { label: '等级', prop: 'level' },
-        { label: '价格', prop: 'price' },
-      ],
-    },
-    headerCellStyle: {
-      type: Object,
-      default: () => ({
-        background: '#f5f7fa', color: '#909366',
-      }),
-    },
-  },
-  emits: ['update:modelValue', 'update:page', 'current-change'],
+  props: propsValue,
+  emits: ['update:modelValue', 'update:page', 'current-change', 'row-click'],
   setup(props, { emit }) {
     const multipleTable = ref(null);
     const toggleSelection = (rows) => {
@@ -75,15 +54,20 @@ export default defineComponent({
       get: () => props.modelValue,
       set: (value) => emit('update:modelValue', value),
     });
+
+    watch(() => props.modelValue, (list) => {
+      if (!list.length && multipleTable.value) multipleTable.value.clearSelection();
+    });
+
     const setSelectable = () => {
       setTimeout(() => {
         if (props.selectList.length) {
           props.tableData.forEach((item) => {
-            item.isSelect = item.isSelect || 1;
+            item[props.checkKey] = item[props.checkKey] ?? 1;
           });
           props.selectList.forEach((item) => {
             props.tableData.forEach((type) => {
-              if (getId(item) === getId(type)) type.isSelect = 0;
+              if (getId(item) === getId(type)) type[props.checkKey] = 0;
             });
           });
           toggleSelection(multipleSelection.value);
@@ -92,8 +76,10 @@ export default defineComponent({
     };
 
     watch(() => props.tableData, (val) => {
-      val.length && setSelectable();
-      val.length && toggleSelection(multipleSelection.value);
+      nextTick(() => {
+        val.length && setSelectable();
+        val.length && toggleSelection(multipleSelection.value);
+      });
     }, { immediate: true });
 
     const handleSelect = (selection, row) => {
@@ -124,9 +110,10 @@ export default defineComponent({
       } else {
         multipleSelection.value = [...multipleSelection.value, row];
       }
+      emit('row-click', row);
     };
 
-    const checkSelection = (row) => (row.isSelect ?? !row.isExist) || (row.isSelect ?? !row.isSelect);
+    const checkSelection = (row) => row[props.checkKey] ?? !row[props.checkKey];
 
     const currentPage = computed({
       get: () => props.page,

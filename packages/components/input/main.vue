@@ -58,16 +58,9 @@ export default defineComponent({
 
         if (value !== '') {
           if (value.indexOf('.') > 0) {
-            if (props.point === 3) {
-              if (value.split('.')[1].length > 3) { // 控制只能输入小数点后3位
-                value = (value.match(/^\d*(\.?\d{0,3})/g)[0]) || null;
-              }
-            } else if (props.point === 1) {
-              if (value.split('.')[1].length > 1) { // 控制只能输入小数点后1位
-                value = (value.match(/^\d*(\.?\d{0,1})/g)[0]) || null;
-              }
-            } else if (value.split('.')[1].length > 2) { // 控制只能输入小数点后2位
-              value = (value.match(/^\d*(\.?\d{0,2})/g)[0]) || null;
+            if (props.point) { // 控制只能输入小数点后几位
+              const reg = new RegExp(`^\\d+(\\.\\d{0,${props.point}})?`, 'g');
+              value = (value.match(reg)[0]) || null;
             }
           }
         }
@@ -76,8 +69,8 @@ export default defineComponent({
       } else if (props.type === 'intText') { // 只能输入整数或者字母
         value = value.replace(/[^\w]/g, '');
       }
-      if (attrs.max !== undefined && value > Number(attrs.max)) value = attrs.max;
-      if (attrs.min !== undefined && value < Number(attrs.min)) value = attrs.min;
+      if (attrs.max !== undefined && value && Number(value) > Number(attrs.max)) value = attrs.max;
+      if (attrs.min !== undefined && value && Number(value) < Number(attrs.min)) value = attrs.min;
       emit('update:modelValue', value);
     };
     // 搜索内容

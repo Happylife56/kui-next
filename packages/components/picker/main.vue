@@ -13,7 +13,7 @@
             <span>已选择<span>({{ multipleSelection.length }})</span>
             </span>
 
-            <el-button type="text" :disabled="!multipleSelection.length" @click="emptyHandler">
+            <el-button text :disabled="!multipleSelection.length" @click="emptyHandler">
               <el-icon><delete /></el-icon> 清空
             </el-button>
           </div>
@@ -25,7 +25,7 @@
                 </el-tooltip>
               </div>
               <el-input-number v-model="item.num" :min="1" class="width-100 flex-shrink mr10" v-if="showCount" />
-              <el-button type="text" @click="deleteHandler(item)">
+              <el-button text @click="deleteHandler(item)">
                 删除
               </el-button>
             </div>
@@ -94,9 +94,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .k-picker {
-  .col-left{
+  .col-left {
     min-height: 430px;
   }
+
   .col-right {
     border: 1px solid #d8dce5;
     border-radius: 6px;
@@ -111,10 +112,14 @@ export default defineComponent({
       height: 392px;
       overflow-y: auto;
     }
+
     .width-100 {
-      width: 100px
+      width: 100px;
     }
   }
 }
 
+:deep(.el-button--text.is-disabled) {
+  background-color: #f5f5f5;
+}
 </style>

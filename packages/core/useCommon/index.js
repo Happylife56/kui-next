@@ -16,9 +16,15 @@ export function useCommon() {
     else router.push({ name });
   };
 
-  const isDev = () => import.meta.env.MODE === 'development';
+  const replacePage = (name, params) => {
+    if (params) router.replace({ path: name, ...params });
+    else if (name.includes('/')) router.replace(name);
+    else router.replace({ name });
+  };
+
+  const isDev = computed(() => import.meta.env.MODE === 'development');
 
   return {
-    route, router, nextTick, ref, reactive, computed, watch, onMounted, onUnmounted, routerName, loadPage, isDev, storeToRefs,
+    route, router, nextTick, ref, reactive, computed, watch, onMounted, onUnmounted, routerName, loadPage, isDev, storeToRefs, replacePage,
   };
 }

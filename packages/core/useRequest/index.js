@@ -71,7 +71,8 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (error && error.response) {
-      const { data, status } = error.response;
+      const { data, status, config } = error.response;
+      if (status) interceptors(data.code, config);
       if (data.errors && data.errors.length) error.message = data.errors[0].message || data.message;
       else {
         switch (status) {
