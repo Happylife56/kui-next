@@ -42,5 +42,5 @@ KUI.install = function (app) {
 export default KUI;
 
 export {
-  directives, KButton, KInput, KTable, KPage, KBatchTable, KDialog, KBreadcrumb, KTabs, KPicker,
+  directives, KButton, KInput, KTable, KPage, KBatchTable, KDialog, KBreadcrumb, KTabs, KPicker, KUI,
 };
