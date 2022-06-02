@@ -14,7 +14,7 @@ export default defineConfig({
   build: {
     outDir: 'lib',
     lib: {
-      entry: resolve(__dirname, 'packages/index.js'),
+      entry: resolve(__dirname, 'packages/main.js'),
       name: 'kui-next',
       fileName: (format) => `k.${format}.js`,
     },

@@ -46,6 +46,7 @@ export default {
 ```
 import { createApp } from 'vue';
 import { KUI } from 'kui-next';
+import 'kui-next/lib/style.css';
  
 Vue.use(KUI)
 ```
