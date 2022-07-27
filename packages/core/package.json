@@ -1,10 +1,22 @@
 {
-  "name": "@common/core",
+  "name": "k-use",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "vue3一些常用的API",
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/k-use.umd.js",
+  "module": "./lib/k-use.es.js",
+  "exports": {
+    ".": {
+      "import": "./lib/k-use.es.js",
+      "require": "./lib/k-use.umd.js"
+    }
+  },
   "scripts": {
-    "test": "jest"
+    "dev": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview"
   },
   "author": "wenxin",
   "license": "ISC",
@@ -12,5 +24,8 @@
     "axios": "^0.21.1",
     "element-plus": "^2.2.0",
     "vue": "^3.2.32"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

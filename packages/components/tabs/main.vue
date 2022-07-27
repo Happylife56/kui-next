@@ -11,15 +11,15 @@
 
 <script>
 import {
-  ref, computed, watchEffect, defineComponent,
+  ref, computed, watchEffect, defineComponent, getCurrentInstance,
 } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'KTabs',
   props: {
     type: { type: String, default: '' },
     path: { type: String, default: '' },
+    modelValue: { type: String, default: '' },
     isPadding: { type: Boolean, default: true },
     replace: { type: Boolean, default: false },
     tabsList: {
@@ -31,16 +31,18 @@ export default defineComponent({
       ],
     },
   },
-  emits: ['tab-click', 'change'],
+  emits: ['tab-click', 'change', 'update:modelValue'],
   setup(props, { emit }) {
-    const route = useRoute();
-    const router = useRouter();
+    const instance = getCurrentInstance();
+    const route = instance.appContext.config.globalProperties.$route;
+    const router = instance.appContext.config.globalProperties.$router;
     const type = computed(() => props.path || route.params.type || route.name);
 
     const activeName = ref(type.value);
 
     watchEffect(() => {
-      activeName.value = type.value;
+      activeName.value = props.modelValue || type.value;
+      emit('update:modelValue', activeName.value);
     });
 
     const query = computed(() => route.query);
